@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://busxuxf6frlcs"]
+
+[ext_resource type="Script" path="res://Game/Player/Player.gd" id="1_uqrwo"]
+[ext_resource type="Texture2D" uid="uid://dwhr8eigk2xwr" path="res://icon.svg" id="1_warbf"]
+[ext_resource type="Script" path="res://Game/DebugLabel.gd" id="3_8qwp6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yn1to"]
+atlas = ExtResource("1_warbf")
+region = Rect2(30, 0, 30, 60)
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_fivq7"]
+slide_on_slope = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yyrby"]
+size = Vector2(50, 40)
+
+[node name="Node2D" type="CharacterBody2D"]
+script = ExtResource("1_uqrwo")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Visuals"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals/Node2D"]
+texture = SubResource("AtlasTexture_yn1to")
+offset = Vector2(0, -30)
+
+[node name="DebugStuff" type="Node2D" parent="Visuals"]
+
+[node name="DebugLabel" type="Label" parent="Visuals/DebugStuff"]
+offset_right = 40.0
+offset_bottom = 26.0
+text = "hello"
+script = ExtResource("3_8qwp6")
+path = NodePath("../../..")
+property = "velocity"
+
+[node name="DebugLabel2" type="Label" parent="Visuals/DebugStuff"]
+offset_left = -1.0
+offset_top = 25.0
+offset_right = 39.0
+offset_bottom = 51.0
+text = "hello"
+script = ExtResource("3_8qwp6")
+path = NodePath("../../..")
+
+[node name="GroundCheck" type="CollisionShape2D" parent="."]
+position = Vector2(0, -20)
+shape = SubResource("SeparationRayShape2D_fivq7")
+
+[node name="SlideoffCheck" type="RayCast2D" parent="."]
+target_position = Vector2(0, 1)
+
+[node name="RightLedgebox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightLedgebox"]
+position = Vector2(30, -40)
+shape = SubResource("RectangleShape2D_yyrby")
+
+[node name="LeftLedgebox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftLedgebox"]
+position = Vector2(-30, -40)
+shape = SubResource("RectangleShape2D_yyrby")
