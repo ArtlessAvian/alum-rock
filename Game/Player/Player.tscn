@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://busxuxf6frlcs"]
+[gd_scene load_steps=9 format=3 uid="uid://busxuxf6frlcs"]
 
 [ext_resource type="Script" path="res://Game/Player/Player.gd" id="1_uqrwo"]
 [ext_resource type="Texture2D" uid="uid://dwhr8eigk2xwr" path="res://icon.svg" id="1_warbf"]
@@ -23,7 +23,11 @@ func _process(delta):
 "
 
 [sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_fivq7"]
+length = 40.0
 slide_on_slope = true
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_m0opv"]
+length = 40.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyrby"]
 size = Vector2(50, 40)
@@ -64,6 +68,7 @@ offset_bottom = 51.0
 text = "hello"
 script = ExtResource("3_8qwp6")
 path = NodePath("../../..")
+property = &"velocity"
 
 [node name="DebugLabel3" type="Label" parent="Visuals/DebugStuff"]
 offset_top = 50.0
@@ -75,16 +80,41 @@ path = NodePath("../../..")
 property = &"_state"
 
 [node name="GroundCheck" type="CollisionShape2D" parent="."]
-position = Vector2(0, -20)
+position = Vector2(0, -40)
 shape = SubResource("SeparationRayShape2D_fivq7")
 
-[node name="SlideoffCheck" type="RayCast2D" parent="."]
+[node name="LeftLow" type="CollisionShape2D" parent="."]
+position = Vector2(20, -20)
+rotation = 1.5708
+shape = SubResource("SeparationRayShape2D_m0opv")
+
+[node name="LeftHigh" type="CollisionShape2D" parent="."]
+position = Vector2(20, -40)
+rotation = 1.5708
+shape = SubResource("SeparationRayShape2D_m0opv")
+
+[node name="RightLow" type="CollisionShape2D" parent="."]
+position = Vector2(-20, -20)
+rotation = -1.5708
+shape = SubResource("SeparationRayShape2D_m0opv")
+
+[node name="RightHigh" type="CollisionShape2D" parent="."]
+position = Vector2(-20, -40)
+rotation = -1.5708
+shape = SubResource("SeparationRayShape2D_m0opv")
+
+[node name="Head" type="CollisionShape2D" parent="."]
 position = Vector2(0, -20)
-target_position = Vector2(0, 21)
+rotation = 3.14159
+shape = SubResource("SeparationRayShape2D_m0opv")
+
+[node name="SlideoffCheck" type="RayCast2D" parent="."]
+position = Vector2(0, -40)
+target_position = Vector2(0, 41)
 
 [node name="SnapToFloorCheck" type="RayCast2D" parent="."]
-position = Vector2(0, -20)
-target_position = Vector2(0, 25)
+position = Vector2(0, -40)
+target_position = Vector2(0, 45)
 
 [node name="RightLedgebox" type="Area2D" parent="."]
 position = Vector2(30, -40)
@@ -93,6 +123,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightLedgebox"]
 shape = SubResource("RectangleShape2D_yyrby")
+debug_color = Color(0.647059, 0.521569, 0, 0.419608)
 
 [node name="LeftLedgebox" type="Area2D" parent="."]
 position = Vector2(-30, -40)
@@ -101,3 +132,4 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftLedgebox"]
 shape = SubResource("RectangleShape2D_yyrby")
+debug_color = Color(0.647059, 0.521569, 0, 0.419608)

@@ -15,21 +15,32 @@ func physics_process(player: Player, delta):
 		player.velocity.y = Player.JUMP_VELOCITY
 		player.set_state(FallState.new());
 		return
-
+	
+	if Input.is_action_just_pressed("dash"):
+		player.set_state(DashState.new());
+		return
+		
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		var ground_parallel = Vector2(-player.ground_normal.y, player.ground_normal.x)
 		var parallel_component = ground_parallel.dot(player.velocity)
-		var target = move_toward(parallel_component, direction * Player.SPEED, 10)
+		
+		# if youre already faster than speed, keep the speed.
+		var accel = 100 if parallel_component * direction <= Player.SPEED else 30
+		var target = move_toward(parallel_component, direction * Player.SPEED, accel)
 		player.velocity = target * ground_parallel
 	else:
-		player.velocity = player.velocity.move_toward(Vector2.ZERO, 10)
+		player.velocity = player.velocity.move_toward(Vector2.ZERO, 100)
 
 func on_touch_ground(player: Player, collision: KinematicCollision2D):
 	player.ground_normal = collision.get_normal()
 	player.velocity = player.velocity.slide(player.ground_normal)
 
 func on_slideoff(player: Player):
+	if player.velocity.length_squared() > Player.SPEED * Player.SPEED:
+		# don't bother.
+		player.set_state(FallState.new())
+	
 	var ray: RayCast2D = player.get_node("SnapToFloorCheck");
 
 	if !ray.is_colliding():
@@ -40,7 +51,7 @@ func on_slideoff(player: Player):
 	var old_collision = ray.get_collision_point()
 
 	ray.force_raycast_update()
-	if !ray.is_colliding():
+	if !ray.is_colliding() or ray.get_collision_normal().angle_to(Vector2.UP) > PI/4:
 		# teeter?
 		print("teeter?")
 		player.set_state(FallState.new())

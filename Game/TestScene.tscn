@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://f3grpakbyw4r"]
+[gd_scene load_steps=5 format=3 uid="uid://f3grpakbyw4r"]
 
 [ext_resource type="PackedScene" uid="uid://busxuxf6frlcs" path="res://Game/Player/Player.tscn" id="1_4hfpr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1i7ho"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xjvp"]
-size = Vector2(400, 400)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_brgpd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_40e7y"]
+radius = 30.0
 
 [node name="TestScene" type="Node2D"]
 
@@ -13,7 +15,7 @@ size = Vector2(400, 400)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(-139, -210)
-polygon = PackedVector2Array(-99, 336, 366, 291, 456, 336, 83, 447)
+polygon = PackedVector2Array(-99, 336, 390, 280, 456, 336, 458, 564, -105, 572)
 
 [node name="Area2D" type="Area2D" parent="StaticBody2D/CollisionPolygon2D"]
 position = Vector2(-96, 336)
@@ -31,10 +33,42 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/CollisionPolygon2D/Area2D2"]
 shape = SubResource("RectangleShape2D_1i7ho")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(11, 433)
-shape = SubResource("RectangleShape2D_8xjvp")
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(-417, 5)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
+position = Vector2(-4, 33)
+polygon = PackedVector2Array(-4, -155, -97, -11, -2, 122, 71, -15)
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D2/CollisionPolygon2D"]
+position = Vector2(-101, -8)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2/CollisionPolygon2D/Area2D"]
+shape = SubResource("RectangleShape2D_1i7ho")
+
+[node name="Area2D2" type="Area2D" parent="StaticBody2D2/CollisionPolygon2D"]
+position = Vector2(71, -15)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2/CollisionPolygon2D/Area2D2"]
+shape = SubResource("RectangleShape2D_1i7ho")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(0, 300)
+shape = SubResource("WorldBoundaryShape2D_brgpd")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+position = Vector2(455, -24)
+shape = SubResource("CircleShape2D_40e7y")
 
 [node name="Node2D" parent="." instance=ExtResource("1_4hfpr")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 123)
