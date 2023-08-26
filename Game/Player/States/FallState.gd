@@ -12,3 +12,9 @@ func physics_process(player: Player, delta):
 		player.velocity.x = move_toward(player.velocity.x, direction * Player.SPEED, 100)
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, Player.SPEED)
+
+func on_touch_ground(player: Player, collision: KinematicCollision2D):
+	player.state = GroundedState.new()
+	player.ground_normal = collision.get_normal()
+	player.velocity.y = 0
+	player.velocity = player.velocity.slide(player.ground_normal)

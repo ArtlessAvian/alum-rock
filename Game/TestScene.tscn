@@ -10,7 +10,7 @@
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(-139, -210)
-polygon = PackedVector2Array(-99, 336, 456, 336, 83, 447)
+polygon = PackedVector2Array(-99, 336, 366, 291, 456, 336, 83, 447)
 
 [node name="Area2D" type="Area2D" parent="StaticBody2D/CollisionPolygon2D"]
 position = Vector2(-96, 336)

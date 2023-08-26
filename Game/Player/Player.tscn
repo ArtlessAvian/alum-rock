@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://busxuxf6frlcs"]
+[gd_scene load_steps=8 format=3 uid="uid://busxuxf6frlcs"]
 
 [ext_resource type="Script" path="res://Game/Player/Player.gd" id="1_uqrwo"]
 [ext_resource type="Texture2D" uid="uid://dwhr8eigk2xwr" path="res://icon.svg" id="1_warbf"]
@@ -7,6 +7,20 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_yn1to"]
 atlas = ExtResource("1_warbf")
 region = Rect2(30, 0, 30, 60)
+
+[sub_resource type="GDScript" id="GDScript_fi6ll"]
+script/source = "extends RayCast2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
 
 [sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_fivq7"]
 slide_on_slope = true
@@ -26,6 +40,13 @@ texture = SubResource("AtlasTexture_yn1to")
 offset = Vector2(0, -30)
 
 [node name="DebugStuff" type="Node2D" parent="Visuals"]
+
+[node name="LargeObnoxiousArrow" type="RayCast2D" parent="Visuals/DebugStuff"]
+scale = Vector2(8, 8)
+exclude_parent = false
+target_position = Vector2(0, 5)
+collision_mask = 0
+script = SubResource("GDScript_fi6ll")
 
 [node name="DebugLabel" type="Label" parent="Visuals/DebugStuff"]
 offset_right = 40.0
@@ -49,7 +70,7 @@ position = Vector2(0, -20)
 shape = SubResource("SeparationRayShape2D_fivq7")
 
 [node name="SlideoffCheck" type="RayCast2D" parent="."]
-target_position = Vector2(0, 1)
+target_position = Vector2(0, 5)
 
 [node name="RightLedgebox" type="Area2D" parent="."]
 collision_layer = 0
