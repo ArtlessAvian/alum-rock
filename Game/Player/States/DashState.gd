@@ -15,6 +15,10 @@ func enter(player: Player):
 func physics_process(player: Player, delta):
 	var speed = max(0, DASH_SPEED - DASH_DECEL * player.state_time)
 	player.velocity *= (speed) / max(1, player.velocity.length())
+
+	if Input.is_action_just_pressed("dash"):
+		player.set_state(DashState.new());
+		return
 	
 	if player.state_time >= 3 and grounded:
 		player.set_state(GroundedState.new())

@@ -28,6 +28,7 @@ slide_on_slope = true
 
 [sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_m0opv"]
 length = 40.0
+slide_on_slope = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyrby"]
 size = Vector2(50, 40)
@@ -47,6 +48,7 @@ offset = Vector2(0, -30)
 [node name="DebugStuff" type="Node2D" parent="Visuals"]
 
 [node name="LargeObnoxiousArrow" type="RayCast2D" parent="Visuals/DebugStuff"]
+visible = false
 scale = Vector2(8, 8)
 exclude_parent = false
 target_position = Vector2(0, 5)
@@ -92,6 +94,7 @@ shape = SubResource("SeparationRayShape2D_m0opv")
 position = Vector2(20, -40)
 rotation = 1.5708
 shape = SubResource("SeparationRayShape2D_m0opv")
+disabled = true
 
 [node name="RightLow" type="CollisionShape2D" parent="."]
 position = Vector2(-20, -20)
@@ -102,11 +105,13 @@ shape = SubResource("SeparationRayShape2D_m0opv")
 position = Vector2(-20, -40)
 rotation = -1.5708
 shape = SubResource("SeparationRayShape2D_m0opv")
+disabled = true
 
 [node name="Head" type="CollisionShape2D" parent="."]
 position = Vector2(0, -20)
 rotation = 3.14159
 shape = SubResource("SeparationRayShape2D_m0opv")
+disabled = true
 
 [node name="SlideoffCheck" type="RayCast2D" parent="."]
 position = Vector2(0, -40)
