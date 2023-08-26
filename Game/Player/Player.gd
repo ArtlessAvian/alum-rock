@@ -5,32 +5,46 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const GRAVITY = 980
 
-var state = GroundedState.new()
+var _state = GroundedState.new()
+var state_time = 0
 var ground_normal = Vector2.UP;
 
 @onready var _previous_position: Vector2 = global_position
 
 func _physics_process(delta):
-	state.physics_process(self, delta)
+	_state.physics_process(self, delta)
+	state_time += 1
 	
 	var collision: KinematicCollision2D = move_and_collide(velocity * delta)
 	if collision != null:
 		if collision.get_local_shape() == $GroundCheck:
-			state.on_touch_ground(self, collision)
+			_state.on_touch_ground(self, collision)
 	
 	$SlideoffCheck.force_raycast_update()
 	if !$SlideoffCheck.is_colliding():
-		#state = FallState.new()
-		pass
-		# state.on_slideoff
+		_state.on_slideoff(self)
 	
 	if velocity.y > 0 and $RightLedgebox.has_overlapping_areas():
-		state = LedgeGrabState.new()
-	
+		set_state(LedgeGrabState.new())
+		var thing = $RightLedgebox.get_overlapping_areas()[0]
+		self.global_position = thing.global_position - $RightLedgebox.position
+		
+	if velocity.y > 0 and $LeftLedgebox.has_overlapping_areas():
+		set_state(LedgeGrabState.new())
+		var thing = $LeftLedgebox.get_overlapping_areas()[0]
+		self.global_position = thing.global_position - $LeftLedgebox.position
+		
 	_previous_position = global_position
 	
 	var arrow = $Visuals/DebugStuff/LargeObnoxiousArrow
 	arrow.scale = Vector2.ONE * max(1, sqrt(velocity.length()))
 	arrow.target_position = velocity / arrow.scale
 
+func set_state(new_state):
+	if _state.has_method("exit"):
+		_state.exit(self)
+	_state = new_state
+	if _state.has_method("enter"):
+		_state.enter(self)
 	
+	state_time = 0

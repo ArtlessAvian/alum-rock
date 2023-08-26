@@ -1,7 +1,7 @@
 extends Label
 
 @export var path = NodePath(".");
-@export var property: String = "global_position"
+@export var property: StringName = "global_position"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

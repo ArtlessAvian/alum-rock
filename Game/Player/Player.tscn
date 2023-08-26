@@ -29,6 +29,7 @@ slide_on_slope = true
 size = Vector2(50, 40)
 
 [node name="Node2D" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_uqrwo")
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -54,7 +55,6 @@ offset_bottom = 26.0
 text = "hello"
 script = ExtResource("3_8qwp6")
 path = NodePath("../../..")
-property = "velocity"
 
 [node name="DebugLabel2" type="Label" parent="Visuals/DebugStuff"]
 offset_left = -1.0
@@ -65,25 +65,39 @@ text = "hello"
 script = ExtResource("3_8qwp6")
 path = NodePath("../../..")
 
+[node name="DebugLabel3" type="Label" parent="Visuals/DebugStuff"]
+offset_top = 50.0
+offset_right = 40.0
+offset_bottom = 76.0
+text = "hello"
+script = ExtResource("3_8qwp6")
+path = NodePath("../../..")
+property = &"_state"
+
 [node name="GroundCheck" type="CollisionShape2D" parent="."]
 position = Vector2(0, -20)
 shape = SubResource("SeparationRayShape2D_fivq7")
 
 [node name="SlideoffCheck" type="RayCast2D" parent="."]
-target_position = Vector2(0, 5)
+position = Vector2(0, -20)
+target_position = Vector2(0, 21)
+
+[node name="SnapToFloorCheck" type="RayCast2D" parent="."]
+position = Vector2(0, -20)
+target_position = Vector2(0, 25)
 
 [node name="RightLedgebox" type="Area2D" parent="."]
+position = Vector2(30, -40)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightLedgebox"]
-position = Vector2(30, -40)
 shape = SubResource("RectangleShape2D_yyrby")
 
 [node name="LeftLedgebox" type="Area2D" parent="."]
+position = Vector2(-30, -40)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftLedgebox"]
-position = Vector2(-30, -40)
 shape = SubResource("RectangleShape2D_yyrby")
